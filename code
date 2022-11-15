@@ -1,0 +1,108 @@
+import random
+#board setup
+
+
+bord = ["-", "-", "-",
+         "-", "-", "-",
+         "-", "-", "-"]
+currentPlayer = "X"
+Winner = None
+gameRunning = True
+
+#Displaying the Board
+
+
+def printBord(bord):
+    print("|" + bord[0] + "|" + bord[1] + "|" + bord[2] + "|")
+    print("-------")
+    print("|" + bord[3] + "|" + bord[4] + "|" + bord[5] + "|")
+    print("-------")
+    print("|" + bord[6] + "|" + bord[7] + "|" + bord[8] + "|")
+printBord(bord)
+
+#player input
+
+
+def playerInput(bord):
+     inp = int(input("enter a number 1-9 "))
+     if inp >= 1 and inp <=9 and bord[inp-1] == "-":
+        bord[inp-1] = currentPlayer
+     else:
+        print("sorry Someone has already taken that space")
+
+#computer
+def computer(bord):
+    while currentPlayer == "O":
+        position = random.randint(0 ,8)
+        if bord[position] == "-":
+            bord[position] = "O"
+            switchPlayer()
+
+#check for tie or draw
+
+
+def checkHorizontal(bord):
+    global Winner
+    if bord[0] == bord[1] == bord[2] and bord[1] != "-":
+        Winner = bord[2]
+        return True
+    elif bord[3] == bord[4] == bord[5] and bord[3] != "-":
+        Wi1nner = bord[3]
+        return True
+    elif bord[6] == bord[7] == bord[8] and bord[7] != "-":
+        Winner = bord[6]
+        return True
+
+def checkRow (bord):
+    global Winner
+    if bord[0] == bord[3] == bord[6] and bord[0] != "-":
+        Winner = bord[0]
+        return True
+    elif bord[1] == bord[4] == bord[7] and bord[1] != "-":
+        Winner = bord[1]
+        return True
+    elif bord[2] == bord[5] == bord[8] and bord[2] != "-":
+        Winner = bord[6]
+        return True
+
+def checkdiag (bord):
+    global Winner
+    if bord[0] == bord[4] == bord[8] and bord[1] != "-":
+        Winner = bord[1]
+        return True
+    elif bord[2] == bord[4] == bord[6] and bord[2] != "-":
+        Winner = bord[1]
+        return True
+def checkDraw (bord):
+    if "-" not in bord:
+        printBord(bord)
+        print("Looks like a Draw")
+        gameRunning = False
+
+def checkWin(bord):
+    if checkHorizontal(bord) or checkRow(bord) or checkDraw(bord) == True:
+        print(f"{Winner} You WIN!")
+        gameRunning = False
+
+#switch player
+
+
+def switchPlayer():
+    global currentPlayer
+    if currentPlayer == "X":
+         currentPlayer = "O"
+    else:
+        currentPlayer = "X"
+
+#anounce Winner
+
+
+while gameRunning:
+        playerInput(bord)
+        printBord(bord)
+        checkWin(bord)
+        checkDraw(bord)
+        switchPlayer()
+        computer(bord)
+        checkWin(bord)
+        checkDraw(bord)
