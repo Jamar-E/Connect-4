@@ -81,7 +81,7 @@ def checkDraw (bord):
 
 def checkWin(bord):
     if checkHorizontal(bord) or checkRow(bord) or checkDraw(bord) == True:
-        print(f"{Winner} You WIN!")
+        print(f"{Winner} You WIN! restart to try again")
         gameRunning = False
 
 #switch player
